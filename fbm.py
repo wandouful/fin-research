@@ -69,14 +69,13 @@ def trim_axs(axs, N):
 time1 = time.time()
 
 # 参数 begin
-s_start = 1  # 起始期权价格
+s_start = 1  # 起始股票价格
 expiry = 0.1  # 到期时间（以年计）
 risk_free = 0  # 年化无风险利率，由于 fbm 中没有类似参数，这里设为 0
-# strikes = np.arange(0.9, 2.5, 0.02)  # 行权价。strike在 0.9 以下时会无法求解波动率，待研究
-strikes = np.arange(0.8, 1.21, 0.05)
+strikes = np.arange(0.8, 1.21, 0.05)  # 行权价
 
 lambdas = np.arange(4, 8, 0.5)
-alphas = np.arange(0.7, 0.71, 0.1)  # 当 alpha 小于 0.3 时波动率会非常奇怪，待研究
+alphas = np.arange(0.7, 0.71, 0.1)
 
 n = 60  # 级数的阶
 
@@ -103,7 +102,6 @@ for ax, lambd in zip(axes, lambdas):
         ends_exp = np.exp(ends)
         ends_exp_adj = ends_exp - np.average(ends_exp) + 1  # normalization，保证股价是 martingale
         s_ends = s_start * ends_exp_adj
-#         s_ends = ends - np.average(ends)
         
         print("lambda:", lambd)
         print("alpha:", alpha)
@@ -131,7 +129,7 @@ for ax, lambd in zip(axes, lambdas):
     ax.set_title("lambda = " + str(round(lambd, 2)))
 
 plt.show()
-plt.savefig("./fig.png")
+# plt.savefig("./fig.png")
 
 time2 = time.time()
 print("Time used:", round(time2 - time1, 4), "seconds")
