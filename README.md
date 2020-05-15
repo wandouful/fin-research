@@ -1,2 +1,2 @@
 # fin-research
-research on finance
+Research on finance
